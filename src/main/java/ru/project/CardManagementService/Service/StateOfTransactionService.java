@@ -24,17 +24,18 @@ public class StateOfTransactionService {
         return mapper.toStateOfTransactionDTOList(repository.findAll());
     }
 
-    public StateOfTransactionDTO createState(StateOfTransactionDTO stateDTO){
-       StateOfTransaction state =  repository.save(mapper.toStateOfTransaction(stateDTO));
+    public StateOfTransactionDTO createState(StateOfTransactionDTO stateDTO) {
+        StateOfTransaction state = repository.save(mapper.toStateOfTransaction(stateDTO));
         return mapper.toStateOfTransactionDTO(state);
     }
-    public void deleteState(String id){
+
+    public void deleteState(String id) {
         repository.deleteById(UUID.fromString(id));
     }
 
-    public StateOfTransactionDTO updateState(String id, StateOfTransactionDTO state){
-        repository.findById(UUID.fromString(id)).orElseThrow(()-> new IllegalArgumentException("Not found id:"+ id));
+    public StateOfTransactionDTO updateState(String id, StateOfTransactionDTO state) {
+        repository.findById(UUID.fromString(id)).orElseThrow(() -> new IllegalArgumentException("Not found id:" + id));
 
-       return createState(state);
+        return createState(state);
     }
 }
