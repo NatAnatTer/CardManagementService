@@ -12,6 +12,7 @@ import ru.project.CardManagementService.repository.OperationOfTransactionReposit
 import ru.project.CardManagementService.repository.StateOfTransactionRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -27,14 +28,14 @@ public class OperationOfTransactionService {
     }
 
     public OperationOfTransactionDTO createOperation(OperationOfTransactionDTO operation) {
-        Card cardFrom = cardRepository.findById(operation.fromCard().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Not found cardFrom with id " + operation.fromCard().getId()));
-        Card cardTo = cardRepository.findById(operation.toCard().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Not found cardTo with id " + operation.toCard().getId()));
+        Card cardFrom = cardRepository.findById(UUID.fromString(operation.fromCard()))
+                .orElseThrow(() -> new IllegalArgumentException("Not found cardFrom with id " + operation.fromCard()));
+        Card cardTo = cardRepository.findById(UUID.fromString(operation.toCard()))
+                .orElseThrow(() -> new IllegalArgumentException("Not found cardTo with id " + operation.toCard()));
         StateOfTransaction state = stateRepository.findById(operation.state().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Not found state with id " + operation.state().getId()));
 
-        OperationOfTransaction operationTransact = repository.save(mapper.toOperationOfTransaction(operation, cardFrom, cardTo, state));
+        OperationOfTransaction operationTransact = repository.save(mapper.toOperationOfTransaction(operation, cardFrom.getId(), cardTo.getId(), state));
 
         return mapper.toOperationOfTransactionDTO(operationTransact);
     }

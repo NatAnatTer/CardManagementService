@@ -14,10 +14,10 @@ public class OperationOfTransaction {
     @Id
     @GeneratedValue
     private UUID id;
-    @JoinColumn(name = "fromCard")
-    private Card fromCard;
-    @JoinColumn(name = "toCard")
-    private Card toCard;
+  //  @JoinColumn(name = "fromCard")
+    private UUID fromCard;
+ //   @JoinColumn(name = "toCard")
+    private UUID toCard;
     private long dateOfTransfer;
     private long amount;
     @JoinColumn(name = "state")
