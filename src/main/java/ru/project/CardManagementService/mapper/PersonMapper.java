@@ -15,7 +15,7 @@ public interface PersonMapper {
 
     Person toPerson(PersonDTO personDTO);
 
-    List<Person> toPersonList(List<PersonDTO> personDTOList);
+
 }
 
 

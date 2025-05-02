@@ -2,10 +2,12 @@ package ru.project.CardManagementService.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.project.CardManagementService.Service.CardService;
 import ru.project.CardManagementService.dto.CardDTO;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,5 +26,20 @@ public class CardController {
     @ResponseStatus(HttpStatus.CREATED)
     public CardDTO createCard(@RequestBody CardDTO cardDTO) {
         return cardService.saveCard(cardDTO);
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<CardDTO> putCard(@PathVariable String id, @RequestBody CardDTO card) {
+        cardService.cardIsExist(id);
+
+        CardDTO updatedCard = cardService.updateCard(card);
+        return ResponseEntity.ok(updatedCard);
+
+    }
+
+
+    @DeleteMapping("/delete/{id}")
+    void deleteById(@PathVariable String id) {
+        cardService.deleteById(id);
     }
 }
