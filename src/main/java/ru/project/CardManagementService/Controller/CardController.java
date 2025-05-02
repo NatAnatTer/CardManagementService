@@ -30,11 +30,10 @@ public class CardController {
 
     @PutMapping("/{id}")
     ResponseEntity<CardDTO> putCard(@PathVariable String id, @RequestBody CardDTO card) {
-        cardService.cardIsExist(id);
+      //  cardService.cardIsExist(id);
 
-        CardDTO updatedCard = cardService.updateCard(card);
+        CardDTO updatedCard = cardService.updateCard(id, card);
         return ResponseEntity.ok(updatedCard);
-
     }
 
 

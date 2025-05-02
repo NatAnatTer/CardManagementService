@@ -40,4 +40,14 @@ public class OperationOfTransactionService {
         return mapper.toOperationOfTransactionDTO(operationTransact);
     }
 
+    public OperationOfTransactionDTO updateTransaction(String id, OperationOfTransactionDTO operation) {
+        repository.findById(UUID.fromString(id)).orElseThrow(() -> new IllegalArgumentException("Transaction is not found with id:" + id));
+
+        return createOperation(operation);
+    }
+
+    public void deleteTransactionById(String id) {
+        repository.deleteById(UUID.fromString(id));
+    }
+
 }

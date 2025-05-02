@@ -10,6 +10,7 @@ import ru.project.CardManagementService.repository.PersonCardRepository;
 import ru.project.CardManagementService.repository.PersonRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -27,5 +28,15 @@ public class PersonCardService {
                 .orElseThrow(() -> new IllegalArgumentException("Not found person with id "+ personCardDTO.owner().getId()));
         PersonCard personCard = repository.save(mapper.toPersonCard(personCardDTO, person));
         return mapper.toPersonCardDTO(personCard);
+    }
+
+    public void deletePersonCard(String id){
+        repository.deleteById(UUID.fromString(id));
+    }
+
+    public PersonCardDTO updatePersonCard(String id, PersonCardDTO personCardDTO){
+        repository.findById(UUID.fromString(id)).orElseThrow(()-> new IllegalArgumentException("Person card not found with id: "+ id));
+
+       return savePersonCard(personCardDTO);
     }
 }
