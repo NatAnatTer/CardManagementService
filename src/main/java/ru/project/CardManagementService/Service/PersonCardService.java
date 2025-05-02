@@ -19,24 +19,24 @@ public class PersonCardService {
     private final PersonRepository personRepository;
     private final PersonCardMapper mapper;
 
-    public List<PersonCardDTO> getAll(){
+    public List<PersonCardDTO> getAll() {
         return mapper.toPersonCardDTOList(repository.findAll());
     }
 
-    public PersonCardDTO savePersonCard(PersonCardDTO personCardDTO){
+    public PersonCardDTO savePersonCard(PersonCardDTO personCardDTO) {
         Person person = personRepository.findById(personCardDTO.owner().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Not found person with id "+ personCardDTO.owner().getId()));
+                .orElseThrow(() -> new IllegalArgumentException("Not found person with id " + personCardDTO.owner().getId()));
         PersonCard personCard = repository.save(mapper.toPersonCard(personCardDTO, person));
         return mapper.toPersonCardDTO(personCard);
     }
 
-    public void deletePersonCard(String id){
+    public void deletePersonCard(String id) {
         repository.deleteById(UUID.fromString(id));
     }
 
-    public PersonCardDTO updatePersonCard(String id, PersonCardDTO personCardDTO){
-        repository.findById(UUID.fromString(id)).orElseThrow(()-> new IllegalArgumentException("Person card not found with id: "+ id));
+    public PersonCardDTO updatePersonCard(String id, PersonCardDTO personCardDTO) {
+        repository.findById(UUID.fromString(id)).orElseThrow(() -> new IllegalArgumentException("Person card not found with id: " + id));
 
-       return savePersonCard(personCardDTO);
+        return savePersonCard(personCardDTO);
     }
 }

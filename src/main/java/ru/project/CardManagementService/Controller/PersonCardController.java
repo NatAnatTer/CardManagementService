@@ -17,25 +17,25 @@ public class PersonCardController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    List<PersonCardDTO> getAll(){
+    List<PersonCardDTO> getAll() {
         return service.getAll();
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    PersonCardDTO create(@RequestBody PersonCardDTO personCardDTO){
+    PersonCardDTO create(@RequestBody PersonCardDTO personCardDTO) {
         return service.savePersonCard(personCardDTO);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deletePersonCard(@PathVariable String id){
+    public void deletePersonCard(@PathVariable String id) {
         service.deletePersonCard(id);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<PersonCardDTO> updatePersonCard(@PathVariable String id, @RequestBody PersonCardDTO personCardDTO){
-      PersonCardDTO pc =  service.updatePersonCard(id, personCardDTO);
-      return ResponseEntity.ok(pc);
+    ResponseEntity<PersonCardDTO> updatePersonCard(@PathVariable String id, @RequestBody PersonCardDTO personCardDTO) {
+        PersonCardDTO pc = service.updatePersonCard(id, personCardDTO);
+        return ResponseEntity.ok(pc);
     }
 
 }
