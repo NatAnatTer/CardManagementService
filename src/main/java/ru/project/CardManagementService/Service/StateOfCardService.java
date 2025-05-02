@@ -8,6 +8,7 @@ import ru.project.CardManagementService.mapper.StateOfCardMapper;
 import ru.project.CardManagementService.repository.StateOfCardRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -24,9 +25,18 @@ public class StateOfCardService {
         return mapper.toStateOfCardDTOList(repository.findAll());
     }
 
-    public StateOfCardDTO createState(StateOfCardDTO state){
+    public StateOfCardDTO createState(StateOfCardDTO state) {
         StateOfCard stateOfCard = repository.save(mapper.toStateOfCard(state));
-       return mapper.toStateOfCardDTO(stateOfCard);
+        return mapper.toStateOfCardDTO(stateOfCard);
+    }
+
+    public void deleteState(String id) {
+        repository.deleteById(UUID.fromString(id));
+    }
+
+    public StateOfCardDTO updateState(String id, StateOfCardDTO state) {
+        repository.findById(UUID.fromString(id)).orElseThrow(() -> new IllegalArgumentException("State not found with id:" + id));
+        return createState(state);
     }
 
 }

@@ -1,6 +1,7 @@
 package ru.project.CardManagementService.Controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.project.CardManagementService.Service.PersonService;
 import ru.project.CardManagementService.dto.PersonDTO;
@@ -21,5 +22,16 @@ public class PersonController {
     @GetMapping("/all")
     public List<PersonDTO> get() {
         return service.getAll();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deletePerson(@PathVariable String id) {
+        service.deletePerson(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PersonDTO> updatePerson(@PathVariable String id, @RequestBody PersonDTO personDTO) {
+        PersonDTO personDTO1 = service.updatePerson(id, personDTO);
+        return ResponseEntity.ok(personDTO1);
     }
 }
