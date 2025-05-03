@@ -1,4 +1,4 @@
-package ru.project.CardManagementService.Service;
+package ru.project.CardManagementService.service;
 
 
 import org.springframework.stereotype.Service;

@@ -1,9 +1,9 @@
-package ru.project.CardManagementService.Controller;
+package ru.project.CardManagementService.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.project.CardManagementService.Service.PersonService;
+import ru.project.CardManagementService.service.PersonService;
 import ru.project.CardManagementService.dto.PersonDTO;
 
 import java.util.List;

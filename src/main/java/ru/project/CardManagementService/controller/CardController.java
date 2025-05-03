@@ -1,13 +1,12 @@
-package ru.project.CardManagementService.Controller;
+package ru.project.CardManagementService.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.project.CardManagementService.Service.CardService;
+import ru.project.CardManagementService.service.CardService;
 import ru.project.CardManagementService.dto.CardDTO;
 
-import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor

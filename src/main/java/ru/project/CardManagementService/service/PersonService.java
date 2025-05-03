@@ -1,7 +1,6 @@
-package ru.project.CardManagementService.Service;
+package ru.project.CardManagementService.service;
 
 import org.springframework.stereotype.Service;
-import ru.project.CardManagementService.dto.PersonCardDTO;
 import ru.project.CardManagementService.dto.PersonDTO;
 import ru.project.CardManagementService.entity.Person;
 import ru.project.CardManagementService.mapper.PersonMapper;

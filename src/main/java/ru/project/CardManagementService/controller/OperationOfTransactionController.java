@@ -1,12 +1,11 @@
-package ru.project.CardManagementService.Controller;
+package ru.project.CardManagementService.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.project.CardManagementService.Service.OperationOfTransactionService;
+import ru.project.CardManagementService.service.OperationOfTransactionService;
 import ru.project.CardManagementService.dto.OperationOfTransactionDTO;
-import ru.project.CardManagementService.entity.OperationOfTransaction;
 
 import java.util.List;
 
