@@ -43,10 +43,6 @@ public class CardController {
         cardService.deleteById(id);
     }
 
-//    @GetMapping
-//    public Page<CardDTO> getAllCard(Pageable pageable) {
-//        return cardService.getCardsPageable(pageable);
-//    }
 
     @GetMapping
     public Page<CardDTO> getAllCardByOwner(Pageable pageable, @RequestParam Map<String, Object> query) {

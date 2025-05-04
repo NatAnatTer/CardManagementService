@@ -13,11 +13,13 @@ import java.util.UUID;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CardMapper {
 
-    CardDTO toCardDTO(Card card);
+    @Mapping(target = "numberOfCard", source = "newNumber")
+    CardDTO toCardDTO(Card card, String newNumber);
 
     List<CardDTO> toCardDTOList(List<Card> card);
 
     @Mapping(target = "id", source = "cardDTO.id")
     @Mapping(target = "owner", source = "owner")
-    Card toCard(CardDTO cardDTO, Person owner);
+    @Mapping(target = "numberOfCard", source = "newNumber")
+    Card toCard(CardDTO cardDTO, Person owner, String newNumber);
 }

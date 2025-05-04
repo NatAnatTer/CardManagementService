@@ -1,22 +1,28 @@
 package ru.project.CardManagementService.security;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.springframework.stereotype.Service;
 
+import java.util.Base64;
+@Service
 public class Md5CryptoServiceImpl implements CryptoService {
-    @Override
-    public String encrypt(String original) throws NoSuchAlgorithmException {
 
-//        MessageDigest md5 = MessageDigest.getInstance("MD5");
-//        md5.update(StandardCharsets.UTF_8.encode(original));
-//        return String.format("%032x", new BigInteger(1, md5.digest()));
-        return original;
+    @Override
+    public String encrypt(String input) {
+        try {
+            return Base64.getEncoder().encodeToString(input.getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public String decrypt(String encrypted) {
-        return encrypted;
+    public String decrypt(String input) {
+        try {
+            return new String(Base64.getDecoder().decode(input));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
 }
