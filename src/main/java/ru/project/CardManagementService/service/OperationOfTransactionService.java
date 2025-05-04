@@ -30,7 +30,7 @@ public class OperationOfTransactionService {
     public OperationOfTransactionDTO createTransaction(OperationOfTransactionDTO operation) {
         UUID id = UUID.fromString(operation.fromCard());
         Card cardFrom = cardService.getCardIfAvailable(id);
-        Card cardTo = cardService.getCardIfAvailable(id);
+        Card cardTo = cardService.getCardIfAvailable(UUID.fromString(operation.toCard()));
         synchronized (operation.fromCard().intern()) {
             try {
                 validationFromCard(id, operation.amount());

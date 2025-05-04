@@ -74,10 +74,15 @@ public class CardService {
         cardRepository.deleteById(UUID.fromString(id));
     }
 
-    public CardDTO updateCard(String id, CardDTO card) {
-        cardRepository.findById(UUID.fromString(id)).orElseThrow(() -> new IllegalArgumentException("Card not exist with id: " + id));
-
+    public CardDTO updateCard(CardDTO card) {
+        cardRepository.findById(UUID.fromString(card.id())).orElseThrow(() -> new IllegalArgumentException("Card not exist with id: " + card.id()));
         return saveCard(card);
+    }
+
+    public CardDTO blockedCard(CardDTO cardDTO){
+        Card card = mapToCard(cardDTO);
+        card.setState(StateOfCard.BLOCK);
+       return map(cardRepository.save(card));
     }
 
     public Card getByID(UUID idCard) {

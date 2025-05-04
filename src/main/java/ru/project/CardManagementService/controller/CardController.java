@@ -31,9 +31,9 @@ public class CardController {
         return cardService.saveCard(cardDTO);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CardDTO> putCard(@PathVariable String id, @RequestBody CardDTO card) {
-        CardDTO updatedCard = cardService.updateCard(id, card);
+    @PutMapping
+    public ResponseEntity<CardDTO> putCard(@RequestBody CardDTO card) {
+        CardDTO updatedCard = cardService.updateCard(card);
         return ResponseEntity.ok(updatedCard);
     }
 
@@ -49,5 +49,10 @@ public class CardController {
         return cardService.getCardsByFilter(pageable, query);
     }
 
+    @PutMapping("/blocked")
+    public ResponseEntity<CardDTO> blockedCard(@RequestBody CardDTO card){
+        CardDTO updatedCard = cardService.blockedCard(card);
+        return ResponseEntity.ok(updatedCard);
+    }
 
 }
