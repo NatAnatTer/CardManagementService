@@ -2,6 +2,7 @@ package ru.project.CardManagementService.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.util.UUID;
 
@@ -14,13 +15,12 @@ public class OperationOfTransaction {
     @Id
     @GeneratedValue
     private UUID id;
-  //  @JoinColumn(name = "fromCard")
     private UUID fromCard;
- //   @JoinColumn(name = "toCard")
     private UUID toCard;
+    @CreatedDate
     private long dateOfTransfer;
     private long amount;
-    @JoinColumn(name = "state")
+    @Enumerated(EnumType.STRING)
     private StateOfTransaction state;
 
 }

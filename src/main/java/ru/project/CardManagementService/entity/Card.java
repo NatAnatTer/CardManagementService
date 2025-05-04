@@ -27,7 +27,7 @@ public class Card implements Serializable {
 
     private long expirationDate;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private StateOfCard state = StateOfCard.BLOCK;
 
     private long balance;

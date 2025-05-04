@@ -23,10 +23,6 @@ public class CardService {
     }
 
     public CardDTO saveCard(CardDTO card) {
-//        PersonCard personCard = personCardRepository.findById(card.personCard().getId())
-//                .orElseThrow(() -> new IllegalArgumentException("Not found person card with id " + card.personCard().getId()));
-//        StateOfCardss state = stateOfCardRepository.findById(card.state().getId())
-      //          .orElseThrow(() -> new IllegalArgumentException("Not found this status with id" + card.state().getId()));
         Card newCard = cardRepository.save(mapper.toCard(card));
         return mapper.toCardDTO(newCard);
     }

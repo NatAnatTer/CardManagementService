@@ -2,8 +2,6 @@ package ru.project.CardManagementService.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
-import ru.project.CardManagementService.dto.StateOfTransactionDTO;
-import ru.project.CardManagementService.entity.StateOfTransaction;
 
 import java.util.List;
 

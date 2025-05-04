@@ -24,7 +24,7 @@ public class OperationOfTransactionController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OperationOfTransactionDTO createTransaction(@RequestBody OperationOfTransactionDTO transaction) {
-        return service.createOperation(transaction);
+        return service.createTransaction(transaction);
     }
 
     @PutMapping
