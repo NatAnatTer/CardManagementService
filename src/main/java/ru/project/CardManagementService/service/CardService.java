@@ -4,13 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.project.CardManagementService.dto.CardDTO;
 import ru.project.CardManagementService.entity.Card;
-import ru.project.CardManagementService.entity.PersonCard;
 import ru.project.CardManagementService.entity.StateOfCard;
-import ru.project.CardManagementService.entity.StateOfCardss;
 import ru.project.CardManagementService.mapper.CardMapper;
 import ru.project.CardManagementService.repository.CardRepository;
-import ru.project.CardManagementService.repository.PersonCardRepository;
-import ru.project.CardManagementService.repository.StateOfCardRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,8 +17,6 @@ import java.util.UUID;
 public class CardService {
     private final CardRepository cardRepository;
     private final CardMapper mapper;
-    private final PersonCardRepository personCardRepository;
-    private final StateOfCardRepository stateOfCardRepository;
 
     public List<CardDTO> getCards() {
         return mapper.toCardDTOList(cardRepository.findAll());
@@ -56,6 +50,8 @@ public class CardService {
        if (card.getState() == StateOfCard.BLOCK || card.getState() == StateOfCard.EXPIRED){
            throw new IllegalArgumentException("Карта" + card.getState().getTitle());
        }
+
+       return card;
     }
 
 }

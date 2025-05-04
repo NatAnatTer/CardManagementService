@@ -3,9 +3,7 @@ package ru.project.CardManagementService.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import ru.project.CardManagementService.dto.PersonCardDTO;
 import ru.project.CardManagementService.entity.Person;
-import ru.project.CardManagementService.entity.PersonCard;
 
 import java.util.List;
 
