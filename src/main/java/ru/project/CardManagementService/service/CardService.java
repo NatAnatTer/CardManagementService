@@ -1,6 +1,9 @@
 package ru.project.CardManagementService.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.project.CardManagementService.dto.CardDTO;
 import ru.project.CardManagementService.entity.Card;
@@ -20,6 +23,12 @@ public class CardService {
 
     public List<CardDTO> getCards() {
         return mapper.toCardDTOList(cardRepository.findAll());
+    }
+
+    public Page<CardDTO> getCardsP(Pageable pageable) {
+      Page<Card> card =  cardRepository.findAll((pageable));
+        List<CardDTO> listCardDto = card.getContent().stream().map(mapper::toCardDTO).toList();
+        return new PageImpl<CardDTO>(listCardDto, pageable, listCardDto.size());
     }
 
     public CardDTO saveCard(CardDTO card) {

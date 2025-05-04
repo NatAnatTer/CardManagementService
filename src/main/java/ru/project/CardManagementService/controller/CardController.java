@@ -1,6 +1,8 @@
 package ru.project.CardManagementService.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,18 +30,19 @@ public class CardController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<CardDTO> putCard(@PathVariable String id, @RequestBody CardDTO card) {
-      //  cardService.cardIsExist(id);
-
+    public ResponseEntity<CardDTO> putCard(@PathVariable String id, @RequestBody CardDTO card) {
         CardDTO updatedCard = cardService.updateCard(id, card);
         return ResponseEntity.ok(updatedCard);
     }
 
 
     @DeleteMapping("/delete/{id}")
-    void deleteById(@PathVariable String id) {
+    public void deleteById(@PathVariable String id) {
         cardService.deleteById(id);
     }
 
-
+    @GetMapping
+    public Page<CardDTO> getAllCard(Pageable pageable) {
+        return cardService.getCardsP(pageable);
+    }
 }
