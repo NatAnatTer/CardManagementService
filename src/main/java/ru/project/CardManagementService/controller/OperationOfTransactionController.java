@@ -15,25 +15,25 @@ import java.util.List;
 public class OperationOfTransactionController {
     private final OperationOfTransactionService service;
 
-    @GetMapping("/all")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<OperationOfTransactionDTO> getAll() {
         return service.getAll();
     }
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OperationOfTransactionDTO createTransaction(@RequestBody OperationOfTransactionDTO transaction) {
         return service.createOperation(transaction);
     }
 
-    @PutMapping("/{id}")
-    ResponseEntity<OperationOfTransactionDTO> putOperation(@PathVariable String id, @RequestBody OperationOfTransactionDTO operation) {
-        OperationOfTransactionDTO updatedOperation = service.updateTransaction(id, operation);
+    @PutMapping
+    ResponseEntity<OperationOfTransactionDTO> putOperation(@RequestBody OperationOfTransactionDTO operation) {
+        OperationOfTransactionDTO updatedOperation = service.updateTransaction(operation);
         return ResponseEntity.ok(updatedOperation);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable String id) {
         service.deleteTransactionById(id);
     }

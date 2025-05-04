@@ -6,7 +6,7 @@ import org.mapstruct.MappingConstants;
 import ru.project.CardManagementService.dto.CardDTO;
 import ru.project.CardManagementService.entity.Card;
 import ru.project.CardManagementService.entity.PersonCard;
-import ru.project.CardManagementService.entity.StateOfCard;
+import ru.project.CardManagementService.entity.StateOfCardss;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface CardMapper {
     List<CardDTO> toCardDTOList(List<Card> card);
 
     @Mapping(target = "id", source = "cardDTO.id")
-    @Mapping(target = "personCard", source = "personCard")
-    @Mapping(target = "state", source = "stateOfCard")
-    Card toCard(CardDTO cardDTO, PersonCard personCard, StateOfCard stateOfCard);
+//    @Mapping(target = "personCard", source = "personCard")
+//    @Mapping(target = "state", source = "stateOfCard")
+//    Card toCard(CardDTO cardDTO, PersonCard personCard, StateOfCardss stateOfCard);
 }

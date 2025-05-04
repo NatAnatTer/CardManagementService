@@ -3,7 +3,7 @@ package ru.project.CardManagementService.service;
 
 import org.springframework.stereotype.Service;
 import ru.project.CardManagementService.dto.StateOfCardDTO;
-import ru.project.CardManagementService.entity.StateOfCard;
+import ru.project.CardManagementService.entity.StateOfCardss;
 import ru.project.CardManagementService.mapper.StateOfCardMapper;
 import ru.project.CardManagementService.repository.StateOfCardRepository;
 
@@ -26,7 +26,7 @@ public class StateOfCardService {
     }
 
     public StateOfCardDTO createState(StateOfCardDTO state) {
-        StateOfCard stateOfCard = repository.save(mapper.toStateOfCard(state));
+        StateOfCardss stateOfCard = repository.save(mapper.toStateOfCard(state));
         return mapper.toStateOfCardDTO(stateOfCard);
     }
 

@@ -12,6 +12,7 @@ import ru.project.CardManagementService.repository.OperationOfTransactionReposit
 import ru.project.CardManagementService.repository.StateOfTransactionRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -19,19 +20,20 @@ import java.util.UUID;
 public class OperationOfTransactionService {
 
     private final OperationOfTransactionRepository repository;
-    private final CardRepository cardRepository;
     private final StateOfTransactionRepository stateRepository;
     private final OperationOfTransactionMapper mapper;
+
+    private final CardService cardService;
 
     public List<OperationOfTransactionDTO> getAll() {
         return mapper.toOperationOfTransactionDTOList(repository.findAll());
     }
 
     public OperationOfTransactionDTO createOperation(OperationOfTransactionDTO operation) {
-        Card cardFrom = cardRepository.findById(UUID.fromString(operation.fromCard()))
-                .orElseThrow(() -> new IllegalArgumentException("Not found cardFrom with id " + operation.fromCard()));
-        Card cardTo = cardRepository.findById(UUID.fromString(operation.toCard()))
-                .orElseThrow(() -> new IllegalArgumentException("Not found cardTo with id " + operation.toCard()));
+
+        Card cardFrom = cardService.getByID(UUID.fromString(operation.fromCard()));
+
+        Card cardTo = cardService.getByID(UUID.fromString(operation.fromCard()));
         StateOfTransaction state = stateRepository.findById(operation.state().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Not found state with id " + operation.state().getId()));
 
@@ -40,8 +42,10 @@ public class OperationOfTransactionService {
         return mapper.toOperationOfTransactionDTO(operationTransact);
     }
 
-    public OperationOfTransactionDTO updateTransaction(String id, OperationOfTransactionDTO operation) {
-        repository.findById(UUID.fromString(id)).orElseThrow(() -> new IllegalArgumentException("Transaction is not found with id:" + id));
+
+
+    public OperationOfTransactionDTO updateTransaction(OperationOfTransactionDTO operation) {
+        repository.findById(UUID.fromString(operation.id())).orElseThrow(() -> new IllegalArgumentException("Transaction is not found with id:" + operation.id()));
 
         return createOperation(operation);
     }
@@ -49,5 +53,13 @@ public class OperationOfTransactionService {
     public void deleteTransactionById(String id) {
         repository.deleteById(UUID.fromString(id));
     }
+
+    private void validationFromCard(UUID idCard, long amount){
+        Card cardFrom = cardService.getByID(idCard);
+        if ((cardFrom.getBalance() - amount) <0){
+            throw new IllegalArgumentException("Недостаточно средств на карте");
+        }
+    }
+
 
 }

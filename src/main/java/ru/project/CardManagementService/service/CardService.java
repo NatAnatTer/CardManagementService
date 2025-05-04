@@ -6,6 +6,7 @@ import ru.project.CardManagementService.dto.CardDTO;
 import ru.project.CardManagementService.entity.Card;
 import ru.project.CardManagementService.entity.PersonCard;
 import ru.project.CardManagementService.entity.StateOfCard;
+import ru.project.CardManagementService.entity.StateOfCardss;
 import ru.project.CardManagementService.mapper.CardMapper;
 import ru.project.CardManagementService.repository.CardRepository;
 import ru.project.CardManagementService.repository.PersonCardRepository;
@@ -28,11 +29,11 @@ public class CardService {
     }
 
     public CardDTO saveCard(CardDTO card) {
-        PersonCard personCard = personCardRepository.findById(card.personCard().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Not found person card with id " + card.personCard().getId()));
-        StateOfCard state = stateOfCardRepository.findById(card.state().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Not found this status with id" + card.state().getId()));
-        Card newCard = cardRepository.save(mapper.toCard(card, personCard, state));
+//        PersonCard personCard = personCardRepository.findById(card.personCard().getId())
+//                .orElseThrow(() -> new IllegalArgumentException("Not found person card with id " + card.personCard().getId()));
+//        StateOfCardss state = stateOfCardRepository.findById(card.state().getId())
+      //          .orElseThrow(() -> new IllegalArgumentException("Not found this status with id" + card.state().getId()));
+        Card newCard = cardRepository.save(mapper.toCard(card));
         return mapper.toCardDTO(newCard);
     }
 
@@ -43,9 +44,18 @@ public class CardService {
     public CardDTO updateCard(String id, CardDTO card) {
         cardRepository.findById(UUID.fromString(id)).orElseThrow(() -> new IllegalArgumentException("Card not exist with id: " + id));
 
-       return saveCard(card);
+        return saveCard(card);
     }
 
+    public Card getByID(UUID idCard) {
+        return cardRepository.findById(idCard).orElseThrow(() -> new IllegalArgumentException("Card not found with id:" + idCard));
+    }
 
+    public Card getCardIfAvailable(UUID idCard){
+        Card card = cardRepository.findById(idCard).orElseThrow(() -> new IllegalArgumentException("Card not found with id:" + idCard));
+       if (card.getState() == StateOfCard.BLOCK || card.getState() == StateOfCard.EXPIRED){
+           throw new IllegalArgumentException("Карта" + card.getState().getTitle());
+       }
+    }
 
 }

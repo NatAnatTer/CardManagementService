@@ -19,13 +19,16 @@ public class Card implements Serializable {
     @GeneratedValue
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "personCardId")
-    private PersonCard personCard;
+    private String numberOfCard;
 
     @ManyToOne
-    @JoinColumn(name = "stateId")
-    private StateOfCard state;
+    @JoinColumn(name = "personId")
+    private Person owner;
+
+    private long expirationDate;
+
+    @Enumerated(EnumType.ORDINAL)
+    private StateOfCard state = StateOfCard.BLOCK;
 
     private long balance;
 }

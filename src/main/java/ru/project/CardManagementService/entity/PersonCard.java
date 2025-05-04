@@ -12,15 +12,15 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 public class PersonCard {
-    @Id
-    @GeneratedValue
-    private UUID id;
-
-    private long numberOfCard;
-
-    @ManyToOne
-    @JoinColumn(name = "personId")
-    private Person owner;
-
-    private long expirationDate;
+//    @Id
+//    @GeneratedValue
+//    private UUID id;
+//
+//    private String numberOfCard;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "personId")
+//    private Person owner;
+//
+//    private long expirationDate;
 }
