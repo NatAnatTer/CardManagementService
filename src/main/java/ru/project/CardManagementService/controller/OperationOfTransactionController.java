@@ -27,15 +27,15 @@ public class OperationOfTransactionController {
         return service.createTransaction(transaction);
     }
 
-    @PutMapping
-    ResponseEntity<OperationOfTransactionDTO> putOperation(@RequestBody OperationOfTransactionDTO operation) {
-        OperationOfTransactionDTO updatedOperation = service.updateTransaction(operation);
-        return ResponseEntity.ok(updatedOperation);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable String id) {
-        service.deleteTransactionById(id);
-    }
+//    @PutMapping
+//    ResponseEntity<OperationOfTransactionDTO> putOperation(@RequestBody OperationOfTransactionDTO operation) {
+//        OperationOfTransactionDTO updatedOperation = service.updateTransaction(operation);
+//        return ResponseEntity.ok(updatedOperation);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public void deleteById(@PathVariable String id) {
+//        service.deleteTransactionById(id);
+//    }
 
 }

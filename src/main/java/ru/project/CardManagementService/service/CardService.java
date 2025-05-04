@@ -41,13 +41,19 @@ public class CardService {
         return cardRepository.findById(idCard).orElseThrow(() -> new IllegalArgumentException("Card not found with id:" + idCard));
     }
 
-    public Card getCardIfAvailable(UUID idCard){
+    public Card getCardIfAvailable(UUID idCard) {
         Card card = cardRepository.findById(idCard).orElseThrow(() -> new IllegalArgumentException("Card not found with id:" + idCard));
-       if (card.getState() == StateOfCard.BLOCK || card.getState() == StateOfCard.EXPIRED){
-           throw new IllegalArgumentException("Карта" + card.getState().getTitle());
-       }
-
-       return card;
+        if (card.getState() == StateOfCard.BLOCK || card.getState() == StateOfCard.EXPIRED) {
+            throw new IllegalArgumentException("Карта" + card.getState().getTitle());
+        }
+        return card;
     }
+
+    public void changeAmount(Card card, Long amount) {
+        card.setBalance(card.getBalance() + amount);
+        cardRepository.save(card);
+
+    }
+
 
 }

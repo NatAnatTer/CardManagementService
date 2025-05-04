@@ -40,4 +40,6 @@ public class CardController {
     void deleteById(@PathVariable String id) {
         cardService.deleteById(id);
     }
+
+
 }

@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import ru.project.CardManagementService.dto.OperationOfTransactionDTO;
 import ru.project.CardManagementService.entity.OperationOfTransaction;
+import ru.project.CardManagementService.entity.StateOfTransaction;
 
 import java.util.List;
 import java.util.UUID;

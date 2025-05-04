@@ -1,5 +1,7 @@
 package ru.project.CardManagementService.dto;
 
 
-public record CardDTO(String id, PersonCard personCard, StateOfCardss state, long balance) {
+import ru.project.CardManagementService.entity.StateOfCard;
+
+public record CardDTO(String id, String numberOfCard, long expirationDate, StateOfCard state, long balance) {
 }
