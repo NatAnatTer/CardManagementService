@@ -10,6 +10,8 @@ import ru.project.CardManagementService.service.CardService;
 import ru.project.CardManagementService.dto.CardDTO;
 
 import java.util.List;
+import java.util.Map;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -19,7 +21,7 @@ public class CardController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<CardDTO> GetCard() {
+    public List<CardDTO> getCard() {
         return cardService.getCards();
     }
 
@@ -41,8 +43,15 @@ public class CardController {
         cardService.deleteById(id);
     }
 
+//    @GetMapping
+//    public Page<CardDTO> getAllCard(Pageable pageable) {
+//        return cardService.getCardsPageable(pageable);
+//    }
+
     @GetMapping
-    public Page<CardDTO> getAllCard(Pageable pageable) {
-        return cardService.getCardsP(pageable);
+    public Page<CardDTO> getAllCardByOwner(Pageable pageable, @RequestParam Map<String, Object> query) {
+        return cardService.getCardsByFilter(pageable, query);
     }
+
+
 }

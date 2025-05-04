@@ -5,7 +5,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import ru.project.CardManagementService.dto.OperationOfTransactionDTO;
 import ru.project.CardManagementService.entity.OperationOfTransaction;
-import ru.project.CardManagementService.entity.StateOfTransaction;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,11 +15,5 @@ public interface OperationOfTransactionMapper {
 
     List<OperationOfTransactionDTO> toOperationOfTransactionDTOList(List<OperationOfTransaction> operationOfTransactions);
 
-    @Mapping(target = "id", source = "operationOfTransactionDTO.id")
-    @Mapping(target = "fromCard", source = "fromCard")
-    @Mapping(target = "toCard", source = "toCard")
-    @Mapping(target = "state", source = "state")
-    OperationOfTransaction toOperationOfTransaction(OperationOfTransactionDTO operationOfTransactionDTO, UUID fromCard, UUID toCard, StateOfTransaction state);
-
-
+    OperationOfTransaction toOperationOfTransaction(OperationOfTransactionDTO operationOfTransactionDTO);
 }

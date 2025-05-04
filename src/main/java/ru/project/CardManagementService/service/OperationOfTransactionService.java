@@ -36,25 +36,18 @@ public class OperationOfTransactionService {
                 validationFromCard(id, operation.amount());
                 cardService.changeAmount(cardFrom, -operation.amount());
                 cardService.changeAmount(cardTo, operation.amount());
-                OperationOfTransaction operationTransact = repository.save(mapper.toOperationOfTransaction(operation, cardFrom.getId(), cardTo.getId(), StateOfTransaction.SUCCESS));
+                OperationOfTransaction transact = mapper.toOperationOfTransaction(operation);
+                transact.setState(StateOfTransaction.SUCCESS);
+                OperationOfTransaction operationTransact = repository.save(transact);
                 return mapper.toOperationOfTransactionDTO(operationTransact);
             } catch (Exception e) {
-                repository.save(mapper.toOperationOfTransaction(operation, cardFrom.getId(), cardTo.getId(), StateOfTransaction.FAILED));
+                OperationOfTransaction transact = mapper.toOperationOfTransaction(operation);
+                transact.setState(StateOfTransaction.FAILED);
+                repository.save(transact);
                 throw new IllegalArgumentException(e);
             }
         }
     }
-
-
-//    public OperationOfTransactionDTO updateTransaction(OperationOfTransactionDTO operation) {
-//        repository.findById(UUID.fromString(operation.id())).orElseThrow(() -> new IllegalArgumentException("Transaction is not found with id:" + operation.id()));
-//
-//        return createTransaction(operation);
-//    }
-//
-//    public void deleteTransactionById(String id) {
-//        repository.deleteById(UUID.fromString(id));
-//    }
 
     private void validationFromCard(UUID idCard, long amount) {
         Card cardFrom = cardService.getByID(idCard);
