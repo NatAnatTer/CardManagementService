@@ -19,4 +19,5 @@ public class Person {
     private String name;
     private long serialAndNumberOfPassport;
     private long createdAt;
+    private UUID userId;
 }

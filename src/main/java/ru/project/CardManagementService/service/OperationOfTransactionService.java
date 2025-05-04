@@ -2,6 +2,8 @@ package ru.project.CardManagementService.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.project.CardManagementService.dto.OperationOfTransactionDTO;
 import ru.project.CardManagementService.entity.Card;
@@ -28,6 +30,7 @@ public class OperationOfTransactionService {
 
     @Transactional
     public OperationOfTransactionDTO createTransaction(OperationOfTransactionDTO operation) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UUID id = UUID.fromString(operation.fromCard());
         Card cardFrom = cardService.getCardIfAvailable(id);
         Card cardTo = cardService.getCardIfAvailable(UUID.fromString(operation.toCard()));
