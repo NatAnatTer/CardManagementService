@@ -12,6 +12,9 @@ import java.util.UUID;
 
 public interface CardRepository extends JpaRepository<Card, UUID> {
     Page<Card> findByOwner(Person person, Pageable pageable);
+    Page<Card> findByOwnerAndState(Person person, StateOfCard state, Pageable pageable);
+
+
     @Query("select c from Card c where c.numberOfCard like ?1")
     Page<Card> findLikeByNumberOfCard(String numberOfCard, Pageable pageable);
     Page<Card> findByState(StateOfCard state, Pageable pageable);
