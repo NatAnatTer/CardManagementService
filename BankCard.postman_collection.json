@@ -1,0 +1,604 @@
+{
+	"info": {
+		"_postman_id": "2f31a22f-f003-49a0-a9e6-f0f1dd81d745",
+		"name": "BankCard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23569797"
+	},
+	"item": [
+		{
+			"name": "Person create",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Tom Holland\",\n    \"serialAndNumberOfPassport\":192931111,\n    \"createdAt\":192938\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/person/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Person get all",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwiaWQiOiI1NjIwYjczNS03Nzc5LTRlMDctYWYwMC0xZTYwNWUxM2EyOWEiLCJlbWFpbCI6ImFsaXNhQG1haWwucnUiLCJzdWIiOiJhbGlzYSIsImlhdCI6MTc0NjQzMTcwOCwiZXhwIjoxNzQ2NTc1NzA4fQ.uCLDnDvrVovdXEyfqVsQpQaq8vceAhEPkGCxe3tB7Ns",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/person/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Card create",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwiaWQiOiI1NjIwYjczNS03Nzc5LTRlMDctYWYwMC0xZTYwNWUxM2EyOWEiLCJlbWFpbCI6ImFsaXNhQG1haWwucnUiLCJzdWIiOiJhbGlzYSIsImlhdCI6MTc0NjQ0NDk0MiwiZXhwIjoxNzQ2NTg4OTQyfQ.D1VCdkPvmMrGCcx82IW0IvwmnonkBMHDpYva-GtF360",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"numberOfCard\":\"1524645364486565\",\n    \"expirationDate\": 645352,\n    \"state\":\"ACTIVE\",\n    \"balance\":2000,\n    \"personId\":\"4598e4d3-be38-4d67-a9c7-d90b46b8b07e\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/card/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Card get all",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwiaWQiOiI1NjIwYjczNS03Nzc5LTRlMDctYWYwMC0xZTYwNWUxM2EyOWEiLCJlbWFpbCI6ImFsaXNhQG1haWwucnUiLCJzdWIiOiJhbGlzYSIsImlhdCI6MTc0NjQ1NzkzMiwiZXhwIjoxNzQ2NjAxOTMyfQ.udA5M1UMoARSsPTCE6mxZ-boxQCrjIRBZtyHZ0ep9vw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/card/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transaction create",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJpZCI6Ijc2YTk1OWJjLTdiNmQtNDJlMS05OWM0LTdiY2ZkODRiMjg4OCIsImVtYWlsIjoibWlzaGFAbWFpbC5ydSIsInN1YiI6Im1pc2hhIiwiaWF0IjoxNzQ2NDUzNzc0LCJleHAiOjE3NDY1OTc3NzR9.Yjr_tRTx9kMe20jO6ug6PjPxjGsyKJjSPkpckwl3qz0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fromCard\":\"308715a7-3315-4b26-8b04-7c94447b000d\",\n    \"toCard\":\"75415afd-f6f8-4abd-b3bd-2b41e4764cd6\",\n    \"dateOfTransfer\":12332,\n    \"amount\":500,\n    \"state\":\"SUCCESS\"\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transaction get all",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJpZCI6Ijc2YTk1OWJjLTdiNmQtNDJlMS05OWM0LTdiY2ZkODRiMjg4OCIsImVtYWlsIjoibWlzaGFAbWFpbC5ydSIsInN1YiI6Im1pc2hhIiwiaWF0IjoxNzQ2NDUyMTY1LCJleHAiOjE3NDY1OTYxNjV9.DdoBFLzDyG_McPUtn-XMzZiawzC7aW1eiwfWTo4fc7U",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/transaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Card change",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwiaWQiOiI1NjIwYjczNS03Nzc5LTRlMDctYWYwMC0xZTYwNWUxM2EyOWEiLCJlbWFpbCI6ImFsaXNhQG1haWwucnUiLCJzdWIiOiJhbGlzYSIsImlhdCI6MTc0NjQ1NzkzMiwiZXhwIjoxNzQ2NjAxOTMyfQ.udA5M1UMoARSsPTCE6mxZ-boxQCrjIRBZtyHZ0ep9vw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n    \"id\":\"75415afd-f6f8-4abd-b3bd-2b41e4764cd6\",\n    \"numberOfCard\": \"5769765432344444\",\n    \"expirationDate\": 645352323,\n    \"state\": \"BLOCK\",\n    \"balance\": 560000,\n    \"personId\":\"f9d3b1cd-81f4-45de-8bf4-7e077ba612d4\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/card",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Card delete",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwiaWQiOiI1NjIwYjczNS03Nzc5LTRlMDctYWYwMC0xZTYwNWUxM2EyOWEiLCJlbWFpbCI6ImFsaXNhQG1haWwucnUiLCJzdWIiOiJhbGlzYSIsImlhdCI6MTc0NjQ1MTM0NCwiZXhwIjoxNzQ2NTk1MzQ0fQ.tzAuu_1WFk7n05cHgQ_2ED4KjfZ9Dxi8n-FfPPmgSlI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/card/delete?idCard=98bab71b-3179-45bb-b7a2-6e45f96b1c7f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "idCard",
+							"value": "98bab71b-3179-45bb-b7a2-6e45f96b1c7f"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Person delete",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJpZCI6Ijc2YTk1OWJjLTdiNmQtNDJlMS05OWM0LTdiY2ZkODRiMjg4OCIsImVtYWlsIjoibWlzaGFAbWFpbC5ydSIsInN1YiI6Im1pc2hhIiwiaWF0IjoxNzQ2NDMxODM1LCJleHAiOjE3NDY1NzU4MzV9.CoshCgH8mW3eZMkjUmEgZOndc7-9JO3724Ft9ubWeLo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/person/delete/4598e4d3-be38-4d67-a9c7-d90b46b8b07e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person",
+						"delete",
+						"4598e4d3-be38-4d67-a9c7-d90b46b8b07e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Person update",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJpZCI6Ijc2YTk1OWJjLTdiNmQtNDJlMS05OWM0LTdiY2ZkODRiMjg4OCIsImVtYWlsIjoibWlzaGFAbWFpbC5ydSIsInN1YiI6Im1pc2hhIiwiaWF0IjoxNzQ2NDMyNzg4LCJleHAiOjE3NDY1NzY3ODh9.CxdxY7Bvm6_Bcs_urPw4NOlMicLirDbiDdYt6BxRj5U",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"4598e4d3-be38-4d67-a9c7-d90b46b8b07e\",\n        \"name\": \"AlisaAAA\",\n        \"serialAndNumberOfPassport\": 574843,\n        \"createdAt\": 48494862,\n        \"userId\":\"5620b735-7779-4e07-af00-1e605e13a29a\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/person",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "card get with filter state",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJpZCI6Ijc2YTk1OWJjLTdiNmQtNDJlMS05OWM0LTdiY2ZkODRiMjg4OCIsImVtYWlsIjoibWlzaGFAbWFpbC5ydSIsInN1YiI6Im1pc2hhIiwiaWF0IjoxNzQ2NDQ1Njc5LCJleHAiOjE3NDY1ODk2Nzl9.7zIcocin9-XjQBt3HW6qw0tSVIOdwa0WABCL_7PjBTs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/card?page=0&size=10&state=EXPIRED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "state",
+							"value": "EXPIRED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "card - filter id person",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfQURNSU4iXSwiaWQiOiI1NjIwYjczNS03Nzc5LTRlMDctYWYwMC0xZTYwNWUxM2EyOWEiLCJlbWFpbCI6ImFsaXNhQG1haWwucnUiLCJzdWIiOiJhbGlzYSIsImlhdCI6MTc0NjQ0NzIwNywiZXhwIjoxNzQ2NTkxMjA3fQ.d97vHo6mJArtkSWQAkgw3HqiinX1_mftcPBqdmJkpY4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/card?page=0&size=10&id=f9d3b1cd-81f4-45de-8bf4-7e077ba612d4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "id",
+							"value": "f9d3b1cd-81f4-45de-8bf4-7e077ba612d4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign in",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\" : \"alisa\",\n    \"password\" : \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/sign-in",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"sign-in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign up",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\":\"victor\",\n    \"password\":\"123\",\n    \"name\":\"Victor\",\n    \"email\":\"victor@mail.ru\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/sign-up",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "card filter with only pagination",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJpZCI6Ijc2YTk1OWJjLTdiNmQtNDJlMS05OWM0LTdiY2ZkODRiMjg4OCIsImVtYWlsIjoibWlzaGFAbWFpbC5ydSIsInN1YiI6Im1pc2hhIiwiaWF0IjoxNzQ2NDQ2NDAyLCJleHAiOjE3NDY1OTA0MDJ9.0JzrJ0PcEGqZt9wR7GVxX18KqVTXYT041qojJrqB9q0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/card?page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get card balance ",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJpZCI6Ijc2YTk1OWJjLTdiNmQtNDJlMS05OWM0LTdiY2ZkODRiMjg4OCIsImVtYWlsIjoibWlzaGFAbWFpbC5ydSIsInN1YiI6Im1pc2hhIiwiaWF0IjoxNzQ2NDQ3NTQyLCJleHAiOjE3NDY1OTE1NDJ9.YstssvbfICLFsmBF2SZ_aAn6ysFrQYCeMSH4HNVwRYg",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/card/balance?idCard=7022d4a5-61e8-429d-83ca-29b93b226882",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card",
+						"balance"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "idCard",
+							"value": "7022d4a5-61e8-429d-83ca-29b93b226882"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Block card",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJpZCI6Ijc2YTk1OWJjLTdiNmQtNDJlMS05OWM0LTdiY2ZkODRiMjg4OCIsImVtYWlsIjoibWlzaGFAbWFpbC5ydSIsInN1YiI6Im1pc2hhIiwiaWF0IjoxNzQ2NDUxMDE3LCJleHAiOjE3NDY1OTUwMTd9.LJox7NXkNPR-6Ydhh8kv9srEiLqoelvNPFjUk6Mzzm4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/card/blocked?idCard=98bab71b-3179-45bb-b7a2-6e45f96b1c7f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"card",
+						"blocked"
+					],
+					"query": [
+						{
+							"key": "idCard",
+							"value": "98bab71b-3179-45bb-b7a2-6e45f96b1c7f"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
