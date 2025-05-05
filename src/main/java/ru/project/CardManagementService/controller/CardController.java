@@ -28,11 +28,11 @@ public class CardController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<CardDTO> getAllCardByOwner(Pageable pageable, @RequestParam Map<String, Object> query) {
+    public Page<CardDTO> getAllCardByFilter(Pageable pageable, @RequestParam Map<String, Object> query) {
         return cardService.getCardsByFilter(pageable, query);
     }
-    @GetMapping("/balance/{id}")
-    public HashMap<Long,String> getBalance(@PathVariable String idCard){
+    @GetMapping("/balance")
+    public HashMap<Long,String> getBalance(@RequestParam String idCard){
         return cardService.getBalance(idCard);
     }
 
@@ -50,15 +50,15 @@ public class CardController {
 
 
     @PutMapping("/blocked")
-    public ResponseEntity<CardDTO> blockedCard(@RequestBody CardDTO card) {
-        CardDTO updatedCard = cardService.blockedCard(card);
+    public ResponseEntity<CardDTO> blockedCard(@RequestParam String idCard) {
+        CardDTO updatedCard = cardService.blockedCard(idCard);
         return ResponseEntity.ok(updatedCard);
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable String id) {
-        cardService.deleteById(id);
+    @DeleteMapping("/delete")
+    public void deleteById(@RequestParam String idCard) {
+        cardService.deleteById(idCard);
     }
 
 

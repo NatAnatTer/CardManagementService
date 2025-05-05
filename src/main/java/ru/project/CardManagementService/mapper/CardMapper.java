@@ -7,13 +7,11 @@ import ru.project.CardManagementService.dto.CardDTO;
 import ru.project.CardManagementService.entity.Card;
 import ru.project.CardManagementService.entity.Person;
 
-import java.util.List;
-
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CardMapper {
 
     @Mapping(target = "numberOfCard", source = "newNumber")
-    @Mapping(target = "owner", source = "personId")
+    @Mapping(target = "personId", source = "personId")
     CardDTO toCardDTO(Card card, String personId, String newNumber);
 
    // List<CardDTO> toCardDTOList(List<Card> card);

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.util.Pair;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,9 +45,11 @@ public class CardService {
                 String value = String.valueOf(query.get(field));
                 switch (field) {
                     case ("id"):
-                        result = getByOwnerId(value, pageable);
-//                        Person owner = personRepository.findById(UUID.fromString(value)).orElseThrow(() -> new IllegalArgumentException("No person with id:" + value));
-//                        result = cardRepository.findByOwner(owner, pageable);
+                        if (getRoleFromAuthority().equals("ROLE_ADMIN") || getPersonFromAuthority().getId().equals(UUID.fromString(value))) {
+                            result = getByOwnerId(value, pageable);
+                        } else {
+                           result = null;
+                        }
                         break;
                     case ("state"):
                         if (getRoleFromAuthority().equals("ROLE_ADMIN")) {
@@ -56,8 +57,6 @@ public class CardService {
                             result = cardRepository.findByState(state, pageable);
                         } else {
                             result = getByOwnerIdAndState(getPersonFromAuthority().getId().toString(), StateOfCard.valueOf(value), pageable);
-//                            StateOfCard state = StateOfCard.valueOf(value);
-//                            result = cardRepository.findByState(state, pageable);
                         }
                         break;
                     default:
@@ -67,6 +66,8 @@ public class CardService {
             if (Objects.nonNull(result)) {
                 List<CardDTO> filteredCardDTO = result.getContent().stream().map(this::map).toList();
                 return new PageImpl<>(filteredCardDTO, pageable, filteredCardDTO.size());
+            } else{
+                return null;
             }
         }
         if (getRoleFromAuthority().equals("ROLE_ADMIN")) {
@@ -77,9 +78,6 @@ public class CardService {
             listCardDto = result.getContent().stream().map(this::map).toList();
         }
         return new PageImpl<>(listCardDto, pageable, listCardDto.size());
-//        Page<Card> card = cardRepository.findAll(pageable);
-//        listCardDto = card.getContent().stream().map(this::map).toList();
-//        return new PageImpl<>(listCardDto, pageable, listCardDto.size());
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -113,10 +111,15 @@ public class CardService {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    public CardDTO blockedCard(CardDTO cardDTO) {
-        Person person = personRepository.findById(UUID.fromString(cardDTO.personId())).orElseThrow(() -> new IllegalArgumentException("Person not exist with id: " + cardDTO.id()));
-        Card card = mapToCard(cardDTO, person);
-        card.setState(StateOfCard.BLOCK);
+    public CardDTO blockedCard(String idCard) {
+        Card card = cardRepository.findById(UUID.fromString(idCard)).orElseThrow(() -> new IllegalArgumentException("Card not exist with id: " + idCard));
+        if(getRoleFromAuthority().equals("ROLE_USER")){
+            if(getPersonFromAuthority().getId().equals(card.getOwner().getId())){
+                card.setState(StateOfCard.BLOCK);
+            } else return null;
+        }else{
+            card.setState(StateOfCard.BLOCK);
+        }
         return map(cardRepository.save(card));
     }
 
@@ -150,7 +153,7 @@ public class CardService {
 
     private CardDTO map(Card card) {
         String decryptingNumber = cryptoService.decrypt(card.getNumberOfCard());
-        return mapper.toCardDTO(card, card.getOwner().toString(), "**** **** **** " + decryptingNumber.substring(decryptingNumber.length() - 4));
+        return mapper.toCardDTO(card, card.getOwner().getId().toString(), "**** **** **** " + decryptingNumber.substring(decryptingNumber.length() - 4));
     }
 
     private Card mapToCard(CardDTO card, Person person) {
