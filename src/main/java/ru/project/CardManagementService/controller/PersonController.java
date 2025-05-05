@@ -29,9 +29,9 @@ public class PersonController {
         service.deletePerson(id);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PersonDTO> updatePerson(@PathVariable String id, @RequestBody PersonDTO personDTO) {
-        PersonDTO personDTO1 = service.updatePerson(id, personDTO);
+    @PutMapping
+    public ResponseEntity<PersonDTO> updatePerson(@RequestBody PersonDTO personDTO) {
+        PersonDTO personDTO1 = service.updatePerson(personDTO);
         return ResponseEntity.ok(personDTO1);
     }
 }

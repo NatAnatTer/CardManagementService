@@ -27,6 +27,8 @@ public class AuthenticationService {
         user.setLogin(request.getLogin());
         user.setPassword((passwordEncoder.encode(request.getPassword())));
         user.setRoles(new HashSet<>());
+        user.setEmail(request.getEmail());
+        user.setName(request.getName());
         userService.save(user);
 
         String jwt = jwtService.generateToken(userService.getUserByName(request.getLogin()).orElseThrow());
@@ -44,10 +46,4 @@ public class AuthenticationService {
         String jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);
     }
-
-
-
-
-
-
 }

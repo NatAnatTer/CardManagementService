@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.project.CardManagementService.dto.CardDTO;
+import ru.project.CardManagementService.dto.UserDto;
 import ru.project.CardManagementService.entity.Card;
 import ru.project.CardManagementService.entity.Person;
 import ru.project.CardManagementService.entity.StateOfCard;
@@ -27,13 +30,12 @@ public class CardService {
 
     public List<CardDTO> getCards() {
         List<Card> listCards = cardRepository.findAll();
-        List<CardDTO> listCardDto = listCards.stream().map(this::map).toList();
-        return listCardDto;
+        return listCards.stream().map(this::map).toList();
     }
 
 
     public Page<CardDTO> getCardsByFilter(Pageable pageable, Map<String, Object> query) {
-        List<CardDTO> listCardDto = new ArrayList<>();
+        List<CardDTO> listCardDto;
         if (!query.isEmpty()) {
 
             Page<Card> result = null;
@@ -64,9 +66,14 @@ public class CardService {
     }
 
 
-    public CardDTO saveCard(CardDTO card) {
-        Card cardNew = cardRepository.save(mapToCard(card));
-        return map(cardNew);
+    public CardDTO saveCard(CardDTO cardDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Person person = personRepository.findByUserId(UUID.fromString(((UserDto)authentication.getPrincipal()).getId()))
+                .orElseThrow(() -> new IllegalArgumentException("not found"));
+        Card card = mapToCard(cardDTO);
+        card.setOwner(person);
+        return map(cardRepository.save(card));
 
     }
 
@@ -109,9 +116,8 @@ public class CardService {
     }
 
     public Card mapToCard(CardDTO card) {
-        Person person = personRepository.findById(UUID.fromString(card.owner().id())).orElseThrow(() -> new IllegalArgumentException("not found person with id:" + card.owner().id()));
         String numberOfCardEncrypted = cryptoService.encrypt(card.numberOfCard());
-        return mapper.toCard(card, person, numberOfCardEncrypted);
+        return mapper.toCard(card, null, numberOfCardEncrypted);
     }
 
 
