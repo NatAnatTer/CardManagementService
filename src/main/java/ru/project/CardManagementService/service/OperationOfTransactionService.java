@@ -67,16 +67,12 @@ public class OperationOfTransactionService {
         }
     }
     private boolean checkIsActiveCard(Card cardFrom, Card cardTo){
-      //  StateOfCard stateCardFrom = cardService.getCardIfAvailable(idCardFrom).getState();
-     //   StateOfCard stateCardTo = cardService.getCardIfAvailable(idCardTo).getState();
         return cardFrom.getState().equals(StateOfCard.ACTIVE)&&cardTo.getState().equals(StateOfCard.ACTIVE);
     }
     private boolean compareUserWithCardUser(Card cardFrom, Card cardTo) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = ((UserDto) auth.getPrincipal()).getId();
         UUID idCurrentPerson = personRepository.findByUserId(UUID.fromString(userId)).get().getId();
-    //    UUID personCardFrom = cardService.getCardIfAvailable(idCardFrom).getOwner().getId();
-    //    UUID personCardTo = cardService.getCardIfAvailable(idCardTo).getOwner().getId();
         return idCurrentPerson.equals(cardFrom.getOwner().getId())&&idCurrentPerson.equals(cardTo.getOwner().getId());
 
 

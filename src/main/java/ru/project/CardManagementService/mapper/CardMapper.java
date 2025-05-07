@@ -14,7 +14,6 @@ public interface CardMapper {
     @Mapping(target = "personId", source = "personId")
     CardDTO toCardDTO(Card card, String personId, String newNumber);
 
-   // List<CardDTO> toCardDTOList(List<Card> card);
 
     @Mapping(target = "id", source = "cardDTO.id")
     @Mapping(target = "owner", source = "owner")
