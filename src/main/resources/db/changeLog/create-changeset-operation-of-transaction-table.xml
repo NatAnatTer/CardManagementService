@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet id="create_table_operation_of_transaction" author="unknownAuthor">
+        <!-- Таблица operation_of_transaction-->
+        <createTable tableName="operation_of_transaction">
+            <!--Поля -->
+            <column
+                    name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column
+                    name="from_card" type="uuid">
+                <constraints nullable="true" unique="false"/>
+
+            </column>
+            <column
+                    name="to_card" type="uuid">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column
+                    name="date_of_transfer" type="int(8)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column
+                    name="amount" type="int(8)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column
+                    name="state" type="varchar(255)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="from_card"
+                                 baseTableName="operation_of_transaction"
+                                 constraintName="fk_from_card"
+                                 referencedColumnNames="id"
+                                 referencedTableName="card"/>
+        <addForeignKeyConstraint baseColumnNames="to_card"
+                                 baseTableName="operation_of_transaction"
+                                 constraintName="fk_to_card"
+                                 referencedColumnNames="id"
+                                 referencedTableName="card"/>
+    </changeSet>
+</databaseChangeLog>

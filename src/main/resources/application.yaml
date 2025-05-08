@@ -8,8 +8,11 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
       show-sql: true
+  liquibase:
+    enabled: true
+
+
 
 logging:
   level:
@@ -22,7 +25,3 @@ server:
 token:
   signing:
     key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
-
-
-
-

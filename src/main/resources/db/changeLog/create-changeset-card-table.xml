@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet id="create_table_card" author="unknownAuthor">
+
+        <!-- Таблица card-->
+        <createTable tableName="card">
+            <!--Поля -->
+            <column
+                    name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column
+                    name="number_of_card" type="varchar(255)">
+                <constraints nullable="true" unique="true"/>
+
+            </column>
+            <column
+                    name="person_id" type="uuid">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column
+                    name="expiration_date" type="int(8)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column
+                    name="state" type="varchar(255)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column
+                    name="balance" type="int(8)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="person_id"
+                                 baseTableName="card"
+                                 constraintName="fk_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="person"/>
+
+    </changeSet>
+
+
+</databaseChangeLog>
