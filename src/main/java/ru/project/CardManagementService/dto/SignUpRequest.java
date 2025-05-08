@@ -14,11 +14,12 @@ public class SignUpRequest {
     @NotBlank(message = "Имя пользователя не может быть пустыми")
     private String login;
 
-    @Schema(description = "Источник данных о пользователе", example = "app")
-    @NotBlank(message = "Источник не может быть пустыми")
+    @Schema(description = "Пароль", example = "0000!!abc")
+    @NotBlank(message = "Не может быть пустыми")
     private String password;
-
+    @Schema(description = "ФИО", example = "Иванов Иван Иванович")
     private String name;
+    @Schema(description = "Электронная почта", example = "ivan@example.ru")
     private String email;
 
 }
