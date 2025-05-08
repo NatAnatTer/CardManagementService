@@ -4,6 +4,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import ru.project.CardManagementService.dto.PersonDTO;
 import ru.project.CardManagementService.entity.Person;
+import ru.project.CardManagementService.exception.NotFoundException;
 import ru.project.CardManagementService.mapper.PersonMapper;
 import ru.project.CardManagementService.repository.PersonRepository;
 
@@ -38,7 +39,7 @@ public class PersonService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public PersonDTO updatePerson(PersonDTO personDTO) {
-        repository.findById(UUID.fromString(personDTO.id())).orElseThrow(() -> new IllegalArgumentException("Person not found with id:" + personDTO.id()));
+        repository.findById(UUID.fromString(personDTO.id())).orElseThrow(() -> new NotFoundException("Клиент с идентификатором id: " + personDTO.id() + " не найден"));
         return createPerson(personDTO);
     }
 

@@ -2,6 +2,7 @@ package ru.project.CardManagementService.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,9 +39,6 @@ public class UserService implements UserDetailsService {
         createPerson(res);
         return mapper.toDto(res);
     }
-    public UserDto getUserById(Long id){
-        return mapper.toDto(repository.findById(id).orElseThrow());
-    }
 
     public Optional<UserDto> getUserByName(String login){
         return repository.findByLogin(login).map(mapper::toDto);
@@ -48,7 +46,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return getUserByName(login).orElseThrow();
+        return getUserByName(login).orElseThrow(() -> new InternalAuthenticationServiceException("Пользователь не найден " + login));
     }
 
     private void createPerson(User user){

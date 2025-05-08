@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ru.project.CardManagementService.exception.NotFoundException;
 import ru.project.CardManagementService.service.JwtService;
 import ru.project.CardManagementService.service.UserService;
 import ru.project.CardManagementService.util.Constants;
@@ -43,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         var username = jwtService.extractUserName(jwt);
 
         if (StringUtils.isNotEmpty(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.getUserByName(username).orElseThrow();
+            UserDetails userDetails = userService.getUserByName(username).orElseThrow(()-> new NotFoundException("Пользователь не найден"));
 
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 SecurityContext context = SecurityContextHolder.createEmptyContext();

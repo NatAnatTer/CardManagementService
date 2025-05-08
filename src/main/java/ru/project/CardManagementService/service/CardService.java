@@ -13,6 +13,8 @@ import ru.project.CardManagementService.dto.UserDto;
 import ru.project.CardManagementService.entity.Card;
 import ru.project.CardManagementService.entity.Person;
 import ru.project.CardManagementService.entity.StateOfCard;
+import ru.project.CardManagementService.exception.IncorrectInputDataException;
+import ru.project.CardManagementService.exception.NotFoundException;
 import ru.project.CardManagementService.mapper.CardMapper;
 import ru.project.CardManagementService.repository.CardRepository;
 import ru.project.CardManagementService.repository.PersonRepository;
@@ -20,7 +22,10 @@ import ru.project.CardManagementService.security.CryptoService;
 
 import java.util.*;
 
-
+/**
+ * Card service - is designed to implement the business logic of performing CRUD operations with the card entity
+ * Car entity located  by link {@link ru.project.CardManagementService.entity.Card}
+ */
 @RequiredArgsConstructor
 @Service
 public class CardService {
@@ -83,7 +88,7 @@ public class CardService {
     @PreAuthorize("hasRole('ROLE_USER')")
     public HashMap<Long,String> getBalance(String idCard) {
         Person person = getPersonFromAuthority();
-        Card card = cardRepository.findById(UUID.fromString(idCard)) .orElseThrow(() -> new IllegalArgumentException("Card not exist with id: " + idCard));
+        Card card = cardRepository.findById(UUID.fromString(idCard)) .orElseThrow(() -> new NotFoundException("Карта с id =  " + idCard + " не найдена"));
         HashMap<Long, String> result = new HashMap<>();
         if(card.getOwner().equals(person)){
            result.put(card.getBalance(), card.getNumberOfCard());
@@ -92,7 +97,7 @@ public class CardService {
     }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public CardDTO saveCard(CardDTO cardDTO) {
-        Person person = personRepository.findById(UUID.fromString(cardDTO.personId())).orElseThrow(() -> new IllegalArgumentException("Person not found" + cardDTO.personId()));
+        Person person = personRepository.findById(UUID.fromString(cardDTO.personId())).orElseThrow(() -> new NotFoundException("Person с id " + cardDTO.personId()+  " не найден"));
         Card card = mapToCard(cardDTO, person);
         card.setOwner(person);
         return map(cardRepository.save(card));
@@ -106,13 +111,13 @@ public class CardService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public CardDTO updateCard(CardDTO card) {
-        cardRepository.findById(UUID.fromString(card.id())).orElseThrow(() -> new IllegalArgumentException("Card not exist with id: " + card.id()));
+        cardRepository.findById(UUID.fromString(card.id())).orElseThrow(() -> new NotFoundException("Карта с id =  " + card.id() + " не найдена"));
         return saveCard(card);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public CardDTO blockedCard(String idCard) {
-        Card card = cardRepository.findById(UUID.fromString(idCard)).orElseThrow(() -> new IllegalArgumentException("Card not exist with id: " + idCard));
+        Card card = cardRepository.findById(UUID.fromString(idCard)).orElseThrow(() -> new NotFoundException("Карта с id =  " + idCard + " не найдена"));
         if(getRoleFromAuthority().equals("ROLE_USER")){
             if(getPersonFromAuthority().getId().equals(card.getOwner().getId())){
                 card.setState(StateOfCard.BLOCK);
@@ -124,23 +129,23 @@ public class CardService {
     }
 
     public Card getByID(UUID idCard) {
-        return cardRepository.findById(idCard).orElseThrow(() -> new IllegalArgumentException("Card not found with id:" + idCard));
+        return cardRepository.findById(idCard).orElseThrow(() -> new NotFoundException("Карта с id =  " + idCard + " не найдена"));
     }
 
     private Page<Card> getByOwnerId(String id, Pageable page) {
-        Person person = personRepository.findById(UUID.fromString(id)).orElseThrow(() -> new IllegalArgumentException("not found person" + id));
+        Person person = personRepository.findById(UUID.fromString(id)).orElseThrow(() -> new NotFoundException("Person с id " + id + " не найден"));
         return cardRepository.findByOwner(person, page);
     }
 
     private Page<Card> getByOwnerIdAndState(String id, StateOfCard state, Pageable page) {
-        Person person = personRepository.findById(UUID.fromString(id)).orElseThrow(() -> new IllegalArgumentException("not found person" + id));
+        Person person = personRepository.findById(UUID.fromString(id)).orElseThrow(() -> new NotFoundException("Person с id " + id + " не найден"));
         return cardRepository.findByOwnerAndState(person, state, page);
     }
 
     public Card getCardIfAvailable(UUID idCard) {
-        Card card = cardRepository.findById(idCard).orElseThrow(() -> new IllegalArgumentException("Card not found with id:" + idCard));
+        Card card = cardRepository.findById(idCard).orElseThrow(() -> new NotFoundException("Карта с id =  " + idCard + " не найдена"));
         if (card.getState() == StateOfCard.BLOCK || card.getState() == StateOfCard.EXPIRED) {
-            throw new IllegalArgumentException("Карта" + card.getState().getTitle());
+            throw new IncorrectInputDataException("Карта" + card.getState().getTitle());
         }
         return card;
     }
@@ -169,7 +174,7 @@ public class CardService {
     private Person getPersonFromAuthority() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = ((UserDto) auth.getPrincipal()).getId();
-        return personRepository.findByUserId(UUID.fromString(userId)).orElseThrow(() -> new IllegalArgumentException("Person not found with userId = " + userId));
+        return personRepository.findByUserId(UUID.fromString(userId)).orElseThrow(() -> new NotFoundException("Person с userId = " + userId + " не найден"));
     }
 
 }

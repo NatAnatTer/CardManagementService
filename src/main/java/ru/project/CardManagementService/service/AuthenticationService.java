@@ -10,6 +10,7 @@ import ru.project.CardManagementService.dto.JwtAuthenticationResponse;
 import ru.project.CardManagementService.dto.SignInRequest;
 import ru.project.CardManagementService.dto.SignUpRequest;
 import ru.project.CardManagementService.dto.UserDto;
+import ru.project.CardManagementService.exception.NotFoundException;
 
 import java.util.HashSet;
 
@@ -31,7 +32,7 @@ public class AuthenticationService {
         user.setName(request.getName());
         userService.save(user);
 
-        String jwt = jwtService.generateToken(userService.getUserByName(request.getLogin()).orElseThrow());
+        String jwt = jwtService.generateToken(userService.getUserByName(request.getLogin()).orElseThrow(()-> new NotFoundException("Пользователь не найден")));
         return new JwtAuthenticationResponse(jwt);
     }
 
