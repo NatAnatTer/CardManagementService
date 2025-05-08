@@ -1,6 +1,7 @@
 package ru.project.CardManagementService.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ public class OperationOfTransactionController {
 
     @Operation(summary = "Получение списка переводов", description = "Позволяет пользователю получать список переводов между картами. Запрос возвращет список переводов между картами")
     @GetMapping
+    @SecurityRequirement(name = "JWT")
     @ResponseStatus(HttpStatus.OK)
     public List<OperationOfTransactionDTO> getAll() {
         return service.getAll();
@@ -29,6 +31,7 @@ public class OperationOfTransactionController {
 
     @Operation(summary = "Перевод между картами", description = "Позволяет пользователю создать транзакцию денежных средств между картами. Запрос принимает на вход JSON с данными о переводе, возвращет информацию о переводе и статус")
     @PostMapping
+    @SecurityRequirement(name = "JWT")
     @ResponseStatus(HttpStatus.CREATED)
     public OperationOfTransactionDTO createTransaction(@RequestBody OperationOfTransactionDTO transaction) {
         return service.createTransaction(transaction);
