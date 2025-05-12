@@ -1,13 +1,13 @@
 databaseChangeLog: #параметр в котором находятся миграции
   - include:
-        file: db/changelog/create-changeset-user-table.xml
+        file: db/changelog/init/create-changeset-user-table.xml
   - include:
-        file: db/changelog/create-changeset-person-table.xml
+        file: db/changelog/init/create-changeset-person-table.xml
   - include:
-      file: db/changelog/create-changeset-card-table.xml
+      file: db/changelog/init/create-changeset-card-table.xml
   - include:
-      file: db/changelog/create-changeset-user-role-table.xml
+      file: db/changelog/init/create-changeset-user-role-table.xml
   - include:
-      file: db/changelog/create-changeset-operation-of-transaction-table.xml
+      file: db/changelog/init/create-changeset-operation-of-transaction-table.xml
 
 

@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.project.CardManagementService.dto.UserDto;
 import ru.project.CardManagementService.entity.Person;
 import ru.project.CardManagementService.entity.Role;
@@ -29,7 +30,8 @@ public class UserService implements UserDetailsService {
     private final PersonRepository personRepository;
     private final UserMapper mapper;
 
-    public UserDto save(UserDto user){
+    @Transactional
+    public UserDto save(UserDto user) {
         User userEntity = mapper.toEntity(user);
         User res = repository.save(userEntity);
         UserRole roleEntity = new UserRole();
@@ -40,7 +42,7 @@ public class UserService implements UserDetailsService {
         return mapper.toDto(res);
     }
 
-    public Optional<UserDto> getUserByName(String login){
+    public Optional<UserDto> getUserByName(String login) {
         return repository.findByLogin(login).map(mapper::toDto);
     }
 
@@ -49,7 +51,8 @@ public class UserService implements UserDetailsService {
         return getUserByName(login).orElseThrow(() -> new InternalAuthenticationServiceException("Пользователь не найден " + login));
     }
 
-    private void createPerson(User user){
+    @Transactional
+    private void createPerson(User user) {
         Person person = new Person();
         person.setUserId(user.getId());
         person.setName(user.getName());

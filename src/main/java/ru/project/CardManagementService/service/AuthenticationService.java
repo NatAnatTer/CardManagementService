@@ -2,6 +2,7 @@ package ru.project.CardManagementService.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +15,9 @@ import ru.project.CardManagementService.exception.NotFoundException;
 
 import java.util.HashSet;
 
+/**
+ * Сервис регистрации новых пользователей и аутентификации существующих пользователей
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -22,6 +26,13 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Метод регистрации новых пользвоателей в системе
+     *
+     * @param request на вход принимает объект {@class SignUpRequest}
+     * @return возвращает авторизационный токен {@class JwtAuthenticationResponse}
+     * @exception  NotFoundException - если созданный пользвоатель пользователь не найден
+     */
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
 
         UserDto user = new UserDto();
@@ -32,14 +43,21 @@ public class AuthenticationService {
         user.setName(request.getName());
         userService.save(user);
 
-        String jwt = jwtService.generateToken(userService.getUserByName(request.getLogin()).orElseThrow(()-> new NotFoundException("Пользователь не найден")));
+        String jwt = jwtService.generateToken(userService.getUserByName(request.getLogin()).orElseThrow(() -> new NotFoundException("Пользователь не найден")));
         return new JwtAuthenticationResponse(jwt);
     }
 
+    /**
+     * Метод аутентификации существующих пользователей
+     *
+     * @param request на вход принимает объект {@class SignInRequest}
+     * @return возвращает авторизационный токен {@class JwtAuthenticationResponse}
+     * @exception InternalAuthenticationServiceException - если указанный пользователь не найден
+     */
     public JwtAuthenticationResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-            request.getLogin(),
-            request.getPassword()
+                request.getLogin(),
+                request.getPassword()
         ));
 
         UserDetails user = userService.loadUserByUsername(request.getLogin());

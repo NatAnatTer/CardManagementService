@@ -11,10 +11,14 @@ import ru.project.CardManagementService.dto.PersonDTO;
 
 import java.util.List;
 
+/**
+ * PersonController - класс для обработки rest запросов для взаимодействия с сущностью,
+ * содержащей персональные данные клиента {@class ru.project.CardManagementService.entity.Person}
+ */
 @Tag(
         name = "Person Controller",
-        description = "Контроллер для управления пользователями"
-        )
+        description = "Контроллер для управления персональными данными клиента"
+)
 
 @RequiredArgsConstructor
 @RestController
@@ -22,30 +26,54 @@ import java.util.List;
 public class PersonController {
     private final PersonService service;
 
-
-    @Operation(summary = "Создание пользователя", description = "Позволяет администратору создавать новых пользователей. Запрос принимает на вход объект с информацией о пользователе, возвращет объект созданного пользователя")
+    /**
+     * Метод создания записи с персональными данными о клиенте
+     *
+     * @param personDTO на вход поступает объект с заполненными персональными данными
+     * @return <Code>(PersonDTO)</Code> метод возвращает созданный объект
+     */
+    @Operation(summary = "Создание клиента",
+            description = "Позволяет администратору создавать новых клиентов. Запрос принимает на вход объект с информацией о клиенте, возвращет объект созданного клиента")
     @PostMapping("/create")
     @SecurityRequirement(name = "JWT")
     public PersonDTO create(@RequestBody PersonDTO personDTO) {
         return service.createPerson(personDTO);
     }
 
-    @Operation(summary = "Получение списка пользователей", description = "Позволяет администратору получать список существующих пользователей. Запрос возвращет список пользователей")
+    /**
+     * Метод для получения списка всех клиентов
+     *
+     * @return <Code>(List<PersonDTO>)</Code> возвращает список всех клиентов
+     */
+    @Operation(summary = "Получение списка клиентов",
+            description = "Позволяет администратору получать список существующих клиентов. Запрос возвращет список клиентов")
     @GetMapping("/all")
     @SecurityRequirement(name = "JWT")
     public List<PersonDTO> get() {
         return service.getAll();
     }
 
-    @Operation(summary = "Удаление пользователя", description = "Позволяет администратору удалять пользователей. Запрос принимает на вход идентификатор пользователя и выполняет удаление записи")
+    /**
+     * Метод удаления клиента
+     *
+     * @param id на вход получает идентификатор клиента
+     */
+    @Operation(summary = "Удаление клиента",
+            description = "Позволяет администратору удалять клиентов. Запрос принимает на вход идентификатор клиента и выполняет удаление записи")
     @DeleteMapping("/delete/{id}")
     @SecurityRequirement(name = "JWT")
     public void deletePerson(@PathVariable String id) {
         service.deletePerson(id);
     }
 
-
-    @Operation(summary = "Изменение пользователя", description = "Позволяет администратору изменять информацию о пользователе. Запрос принимает на вход объект DTO пользоваеля с измененной информацией, возвращет измененный объект из базы данных")
+    /**
+     * Метод изменения информации о клиенте
+     *
+     * @param personDTO на вход поступает объект <Code>(PersonDTO)</Code> с измененными полями
+     * @return метод возвращает измененный объект
+     */
+    @Operation(summary = "Изменение клиента",
+            description = "Позволяет администратору изменять информацию о клиенте. Запрос принимает на вход объект DTO клиента с измененной информацией, возвращет измененный объект из базы данных")
     @PutMapping
     @SecurityRequirement(name = "JWT")
     public ResponseEntity<PersonDTO> updatePerson(@RequestBody PersonDTO personDTO) {

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Base64;
 @Service
-public class Md5CryptoServiceImpl implements CryptoService {
+public class CryptoServiceImpl implements CryptoService {
 
     @Override
     public String encrypt(String input) {

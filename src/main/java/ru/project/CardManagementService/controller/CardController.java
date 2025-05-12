@@ -14,9 +14,11 @@ import ru.project.CardManagementService.service.CardService;
 import ru.project.CardManagementService.dto.CardDTO;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+/**
+ * Card controller - класс для обработки rest запросов для взаимодействия с сущностью банковская карта {@class Card}
+ */
 @Tag(
         name = "Card Controller",
         description = "Контроллер управления картами"
@@ -27,14 +29,27 @@ import java.util.Map;
 public class CardController {
     private final CardService cardService;
 
+    /**
+     * Метод для вывода списка всех банковских карт
+     *
+     * @param pageable принимает на вход параметры пагинации page=0&size=3 - номер страницы и количество элементов на странице
+     * @return <Code>(Page<CardDTO>)</Code> возвразает список банковских карт в формате DTO с постраничным выводом
+     */
     @Operation(summary = "Получение списка карт", description = "Позволяет пользователю администратору получать список всех банковских карт. Запрос возвращет все записи без фильтров и pagination")
     @GetMapping("/all")
     @SecurityRequirement(name = "JWT")
     @ResponseStatus(HttpStatus.OK)
-    public List<CardDTO> getCard() {
-        return cardService.getCards();
+    public Page<CardDTO> getCard(Pageable pageable) {
+        return cardService.getCards(pageable);
     }
 
+    /**
+     * Метод получения фильтрованного списка карт
+     *
+     * @param pageable параметры пагинации <Code>(page=0&size=3)</Code> - номер страницы и количество элементов на странице
+     * @param query    который представляет из себя <Code>(Map<String, Object>)</Code> и содержит наименование поля, по которому производится фильтрация и значение фильтра
+     * @return <Code>(Page<CardDTO>)</Code> возвразает список банковских карт в формате DTO согласно указанным в запросе номеру страницы и количеством элеменотв на странице
+     */
     @Operation(summary = "Получение списка карт", description = "Позволяет пользователю получать список банковских карт. Запрос принимает на вход параметры pagination и фильтры, возвращет все записи постранично, с примененными фильтрами")
     @GetMapping
     @SecurityRequirement(name = "JWT")
@@ -43,14 +58,25 @@ public class CardController {
         return cardService.getCardsByFilter(pageable, query);
     }
 
+    /**
+     * Метод предназначен для получения баланса карты
+     *
+     * @param idCard на вход получает идентификатор карты, по корой необходимо получить баланс
+     * @return <Code>(HashMap<Long,String>)</Code> метод возвращает пару значений - баланс и номер карты
+     */
     @Operation(summary = "Запрос баланса", description = "Позволяет пользователю получать баланс указанной карты. Запрос принимает на вход идентификатор карты, возвращет баланс по указанной карте")
     @GetMapping("/balance")
     @SecurityRequirement(name = "JWT")
-    public HashMap<Long,String> getBalance(@RequestParam @Parameter(description = "Идентификатор карты",required = true, example = "75415afd-f6f8-4abd-b3bd-2b41e4764cd6") String idCard){
+    public HashMap<Long, String> getBalance(@RequestParam @Parameter(description = "Идентификатор карты", required = true, example = "75415afd-f6f8-4abd-b3bd-2b41e4764cd6") String idCard) {
         return cardService.getBalance(idCard);
     }
 
-
+    /**
+     * Метод создания банковской карты
+     *
+     * @param cardDTO на вход подается объект с реквизитами карты
+     * @return возвращает метод возвращает созданный объект с присвоенным уникальным идентификатором
+     */
     @Operation(summary = "Создание банковской карты", description = "Позволяет администратору создавать банковские карты. Запрос принимает на вход json с параметрами карты, возвращет объект созданной карты")
     @PostMapping("/create")
     @SecurityRequirement(name = "JWT")
@@ -59,7 +85,12 @@ public class CardController {
         return cardService.saveCard(cardDTO);
     }
 
-
+    /**
+     * Метод изменения банковской карты
+     *
+     * @param card на вход подается обхект карты с измененными полями
+     * @return возвращает метод обновленный объект
+     */
     @Operation(summary = "Изменение банковской карты", description = "Позволяет пользователю изменить банковскую карту. Запрос принимает на вход объект  DTO банковской карты, возвращет измененый объект")
     @PutMapping
     @SecurityRequirement(name = "JWT")
@@ -68,7 +99,13 @@ public class CardController {
         return ResponseEntity.ok(updatedCard);
     }
 
-
+    /**
+     * Метеод блокировки банковской карты
+     *
+     * @param idCard на вход поступает идентификатор карты
+     * Метод меняет статус карты
+     * @return возвращает метод измененный объект карты
+     */
     @Operation(summary = "Блокировка карты", description = "Позволяет пользователю заблокировать банковскую карту. Запрос принимает на вход идентификатор банковской карты, возвращет измененый объект")
     @PutMapping("/blocked")
     @SecurityRequirement(name = "JWT")
@@ -77,6 +114,12 @@ public class CardController {
         return ResponseEntity.ok(updatedCard);
     }
 
+    /**
+     * Метод удаления банковской карты
+     *
+     * @param idCard на вход поступает идентификатор карты
+     * Метод удаляет банковскую карту и ни чего клиенту не возвращает
+     */
     @Operation(summary = "Удаление банковской карты", description = "Позволяет пользователю удалить банковскую карту. Запрос принимает на вход идентификатор банковской карты")
     @DeleteMapping("/delete")
     @SecurityRequirement(name = "JWT")
