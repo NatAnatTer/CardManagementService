@@ -31,7 +31,7 @@ public class AuthenticationService {
      *
      * @param request на вход принимает объект {@class SignUpRequest}
      * @return возвращает авторизационный токен {@class JwtAuthenticationResponse}
-     * @exception  NotFoundException - если созданный пользвоатель пользователь не найден
+     * @throws NotFoundException - если созданный пользвоатель пользователь не найден
      */
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
 
@@ -52,7 +52,7 @@ public class AuthenticationService {
      *
      * @param request на вход принимает объект {@class SignInRequest}
      * @return возвращает авторизационный токен {@class JwtAuthenticationResponse}
-     * @exception InternalAuthenticationServiceException - если указанный пользователь не найден
+     * @throws InternalAuthenticationServiceException - если указанный пользователь не найден
      */
     public JwtAuthenticationResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

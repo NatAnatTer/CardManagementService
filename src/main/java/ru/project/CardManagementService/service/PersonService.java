@@ -24,6 +24,7 @@ public class PersonService {
 
     /**
      * Метод получения списка клиентов, доступен пользователю с ролью {@class Role.ROLE_ADMIN}
+     *
      * @return список всех клиентов
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -32,9 +33,10 @@ public class PersonService {
     }
 
     /**
+     * Метод создания нового клиента
      *
-     * @param personDTO
-     * @return
+     * @param personDTO объект {@link PersonDTO}, содержащий информацию о новом клиенте
+     * @return только что созданный объект {@link PersonDTO}
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
@@ -44,8 +46,9 @@ public class PersonService {
     }
 
     /**
+     * Метод удаления существующего клиента
      *
-     * @param id
+     * @param id идентификатор клиента
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
@@ -54,9 +57,10 @@ public class PersonService {
     }
 
     /**
+     * Метод изменения существующего клиента
      *
-     * @param personDTO
-     * @return
+     * @param personDTO объект {@link PersonDTO}, содержащий информацию о клиенте с новыми значениями полей
+     * @return только что измененный объект {@link PersonDTO}
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional

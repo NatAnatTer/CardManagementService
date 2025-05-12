@@ -21,6 +21,9 @@ import ru.project.CardManagementService.repository.UserRoleRepository;
 import java.util.Collections;
 import java.util.Optional;
 
+/**
+ * сервис для реализации логики работы с учетной записью пользователями {@link User}
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,16 @@ public class UserService implements UserDetailsService {
     private final PersonRepository personRepository;
     private final UserMapper mapper;
 
+    /**
+     * Метод сохранения пользователя в базе данных
+     * Метод сначала преобразует объект {@link UserDto} в {@link User}
+     * Затем сохраняет в репозиторий
+     * Затем создает для этого пользователя роль {@class Role.ROLE_USER} в {@link UserRole}
+     * Далее создается запись в таблице клиентов
+     *
+     * @param user объект, содержащий информацию о создаваемом пользователе в формате {@link UserDto}
+     * @return объект {@link UserDto}, который вернулся в результате сохранения пользователя в базе данных
+     */
     @Transactional
     public UserDto save(UserDto user) {
         User userEntity = mapper.toEntity(user);
@@ -42,15 +55,34 @@ public class UserService implements UserDetailsService {
         return mapper.toDto(res);
     }
 
+    /**
+     * Метод получения пользователя по логину
+     *
+     * @param login логин пользователя
+     * @return Optional {@link UserDto} объект пользователя
+     */
     public Optional<UserDto> getUserByName(String login) {
         return repository.findByLogin(login).map(mapper::toDto);
     }
 
+    /**
+     * Метод получения  информации о пользователе по логину
+     *
+     * @param login логин пользвоателя
+     * @return {@link UserDetails} данные учетной записи
+     * @throws UsernameNotFoundException - возникает если пользователь не найден
+     */
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         return getUserByName(login).orElseThrow(() -> new InternalAuthenticationServiceException("Пользователь не найден " + login));
     }
 
+    /**
+     * Создание клиента
+     * Выполняется создание объекта {@link Person} и сохранение в базу данных
+     *
+     * @param user объект с информацией о пользвоателе {@link User}
+     */
     @Transactional
     private void createPerson(User user) {
         Person person = new Person();

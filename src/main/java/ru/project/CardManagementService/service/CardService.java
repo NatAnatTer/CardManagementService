@@ -60,6 +60,7 @@ public class CardService {
      * Считывается параметр, отвечающий за наименование поля,
      * согласно полученных данных выполняется вызов фильтров и преобразования
      * возвращается полученный результат в формате {@link CardDTO}
+     *
      * @param pageable параметр пагинации page=0&size=3 - номер страницы и количество элементов на странице
      * @param query    параметр фильтра <Code>(Map<String, Object>)</Code>
      *                 где String - это наименование поля, по которому выполняется фильтрация, Object - значение фильтра
@@ -68,7 +69,7 @@ public class CardService {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public Page<CardDTO> getCardsByFilter(Pageable pageable, Map<String, Object> query) {
         List<CardDTO> listCardDto;
-        if (!query.isEmpty()) {
+        if (query.size() > 2) {//(!query.isEmpty()) {
 
             Page<Card> result = null;
             for (String field : query.keySet()) {

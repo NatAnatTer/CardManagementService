@@ -1,8 +1,8 @@
 databaseChangeLog: #параметр в котором находятся миграции
   - include:
-        file: db/changelog/init/create-changeset-user-table.xml
+      file: db/changelog/init/create-changeset-user-table.xml
   - include:
-        file: db/changelog/init/create-changeset-person-table.xml
+      file: db/changelog/init/create-changeset-person-table.xml
   - include:
       file: db/changelog/init/create-changeset-card-table.xml
   - include:

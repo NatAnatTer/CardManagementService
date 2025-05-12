@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 public interface UserMapper {
 
     User toEntity(UserDto entity);
+
     UserDto toDto(User entity);
 
-    default Set<UserRole> toRoleEntity(Set<String> roles){
+    default Set<UserRole> toRoleEntity(Set<String> roles) {
         return roles.stream().map(role -> new UserRole()).collect(Collectors.toSet());
     }
-    default Set<String> toRole(Set<UserRole> roles){
+
+    default Set<String> toRole(Set<UserRole> roles) {
         return roles.stream().map(UserRole::getRole).collect(Collectors.toSet());
     }
 }
